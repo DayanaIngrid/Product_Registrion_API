@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, Float, DateTime
 
-from src.config.database import Base
+from src.config.database import Base, engine
 from src.config.database import init_db
 
 
