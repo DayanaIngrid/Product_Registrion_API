@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 
 from src.config.dependencies import get_authenticated_product, get_product_service
 from src.config.database import get_db
