@@ -9,7 +9,7 @@ from src.service.product_service import ProductService
 auth_service = AuthService()
 
 
-def get_authenticated_user(authorization: str = Header(alias='Authorization')) -> ProductRepository:
+def get_authenticated_product(authorization: str = Header(alias='Authorization')) -> ProductRepository:
     return auth_service.validate_token(authorization)
 
 
