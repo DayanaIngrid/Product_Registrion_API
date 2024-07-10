@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from src.domain.model.models import Product
+from datetime import datetime
 
 
 class ProductRepository:
