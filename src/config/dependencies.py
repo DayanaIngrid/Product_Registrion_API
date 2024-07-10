@@ -1,4 +1,5 @@
 from fastapi import Depends, Header
+from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
 from src.config.database import get_db
@@ -19,3 +20,4 @@ def get_product_repository(session: Session = Depends(get_db)) -> ProductReposit
 
 def get_product_service(repository: ProductRepository = Depends(get_product_repository)) -> ProductService:
     return ProductService(repository)
+
