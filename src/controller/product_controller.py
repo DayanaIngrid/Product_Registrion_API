@@ -1,32 +1,49 @@
 from fastapi import APIRouter, Depends
 
 from src.config.dependencies import get_authenticated_user, get_product_service
-from src.domain.dto.dtos import ProdutoCreateDTO, ProdutoUpdateDTO
+from src.domain.dto.dtos import ProductCreateDTO, ProductUpdateDTO, ProductDTO
 from src.service.product_service import ProductService
 
 product_router = APIRouter(prefix='/products', tags=['Products'], dependencies=[Depends(get_authenticated_user)])
 
 
-# TODO: utilizar as anotações adequadamente
-async def create(request: ProdutoCreateDTO, service: ProductService = Depends(get_product_service)):
-    return service.create(request)
+def get_product_repo(session: Session = Depends(get_db)):
+    return ProductRepository(session=session)
 
 
-# TODO: implementar método para buscar produto por ID
-async def find_by_id(user_id: int, service: ProductService = Depends(get_product_service)):
-    return service.find_by_id(user_id=user_id)
+@product_router.post('/', status_code=201, description='Cria um novo produto', response_model=ProdutoDTO)
+async def create_product(
+        request: ProdutoCreateDTO,
+        product_repo: ProductRepository = Depends(get_product_repo),
+        authorization: str = Depends(get_authenticated_user)
+):
+    product_service = ProductService(product_repo)
+    return product_service.create(data=request)
 
 
-# TODO: implementar método para buscar todos os produtos
-async def find_all(service: ProductService = Depends(get_product_service)):
-    return service.find_all()
+@product_router.get('/{id}', status_code=200, description='Buscar produto por ID', response_model=ProdutoDTO)
+async def find_product_by_id(id: int, product_repo: ProductRepository = Depends(get_product_repo),
+                             authorization: str = Depends(get_authenticated_user)):
+    product_service = ProductService(product_repo)
+    return product_service.find_by_id(product_id=id)
 
 
-# TODO: implementar método para atualizar produto
-async def update(user_id: int, user_data: ProdutoUpdateDTO, service: ProductService = Depends(get_product_service)):
-    return service.update(user_id, user_data)
+@product_router.get('/', status_code=200, description='Buscar todos os produtos', response_model=list[ProdutoDTO])
+async def find_all_products(product_repo: ProductRepository = Depends(get_product_repo),
+                            authorization: str = Depends(get_authenticated_user)):
+    product_service = ProductService(product_repo)
+    return product_service.find_all()
 
 
-# TODO: implementar método para deletar produto
-async def delete(user_id: int, service: ProductService = Depends(get_product_service)):
-    service.delete(user_id=user_id)
+@product_router.put('/{id}', status_code=200, description='Atualizar um produto', response_model=ProdutoDTO)
+async def update_product(id: int, product_data: ProdutoUpdateDTO, product_repo: ProductRepository = Depends(get_product_repo),
+                         authorization: str = Depends(get_authenticated_user)):
+    product_service = ProductService(product_repo)
+    return product_service.update(product_id=id, user_data=product_data)
+
+
+@product_router.delete('/{id}', status_code=204, description='Deletar produto por ID')
+async def delete_product(id: int, product_repo: ProductRepository = Depends(get_product_repo),
+                         authorization: str = Depends(get_authenticated_user)):
+    product_service = ProductService(product_repo)
+    product_service.delete(product_id=id)

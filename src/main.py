@@ -14,9 +14,9 @@ app = FastAPI(
     docs_url=None,
     redoc_url=None,
     contact={
-        "name": "Luan Fernandes",
-        "email": "luan.santos26@fatec.sp.gov.br",
-        "url": "https://luanfernandes.dev"
+        "name": "Dayana Ingrid",
+        "email": "dayanaingrid.040@gmail.com"
+        #, "url": "https://luanfernandes.dev"
     },
     license_info={
         "name": "MIT",
@@ -26,11 +26,12 @@ app = FastAPI(
         {
             "url": "http://localhost:8000",
             "description": "Development server"
-        },
-        {
-            "url": "http://user.luanfernandes.dev",
-            "description": "Production server"
         }
+        # ,
+        # {
+        #     "url": "http://user.luanfernandes.dev",
+        #     "description": "Production server"
+        # }
     ]
 )
 
@@ -70,4 +71,4 @@ async def get_openapi():
 if __name__ == '__main__':
     import uvicorn
 
-    uvicorn.run(app, host='localhost', port=8000, log_config=log_config)
+    uvicorn.run(app, host='localhost', port=8000)

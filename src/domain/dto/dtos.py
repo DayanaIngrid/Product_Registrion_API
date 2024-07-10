@@ -4,7 +4,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class ProdutoDTO(BaseModel):
+class ProductDTO(BaseModel):
     id: int
     nome: str
     descricao: str
@@ -12,14 +12,14 @@ class ProdutoDTO(BaseModel):
     estoque: int
 
 
-class ProdutoCreateDTO(BaseModel):
+class ProductCreateDTO(BaseModel):
     nome: str
     descricao: str
     preco: float
     estoque: int
 
 
-class ProdutoUpdateDTO(BaseModel):
+class ProductUpdateDTO(BaseModel):
     nome: Optional[str] = None
     descricao: Optional[str] = None
     preco: Optional[float] = None

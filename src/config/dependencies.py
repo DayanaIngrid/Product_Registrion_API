@@ -2,7 +2,7 @@ from fastapi import Depends, Header
 from sqlalchemy.orm import Session
 
 from src.config.database import get_db
-from src.repository.usuario_repository import ProductRepository
+from src.repository.product_repository import ProductRepository
 from src.service.auth_service import AuthService
 from src.service.product_service import ProductService
 
