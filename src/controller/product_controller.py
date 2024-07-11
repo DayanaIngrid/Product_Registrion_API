@@ -24,6 +24,8 @@ async def create(
 
 
 
+
+
 @product_router.get('/{product_id}', status_code=200, description='Buscar produto por ID', response_model=ProductDTO)
 async def find_product_by_id(product_id: int, product_repo: ProductRepository = Depends(get_product_repo),
                              authorization: str = Depends(get_authenticated_product)):
@@ -43,6 +45,7 @@ async def update_product(product_id: int, product_data: ProductUpdateDTO, produc
                          authorization: str = Depends(get_authenticated_product)):
     product_service = ProductService(product_repo)
     return product_service.update(product_id, product_data)
+
 
 
 @product_router.delete('/{product_id}', status_code=204, description='Deletar produto por ID')
