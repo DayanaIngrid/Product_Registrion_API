@@ -5,21 +5,21 @@ from datetime import datetime
 
 class ProductRepository:
 
-    def __init__(self, db: Session):
-        self.db = db
+    def __init__(self, session: Session):
+        self.session = session
 
     def save(self, product: Product ):
-        self.db.add(product)
-        self.db.commit()
-        self.db.refresh(product)
+        self.session.add(product)
+        self.session.commit()
+        self.session.refresh(product)
         return product
 
     def delete(self, product: Product):
-        self.db.delete(product)
-        self.db.commit()
+        self.session.delete(product)
+        self.session.commit()
     
     def read(self, product_id: int):
-        return self.db.query(Product).filter(Product.id == product_id).first()
+        return self.session.query(Product).filter(Product.id == product_id).first()
 
     def find_all(self):
-        return self.db.query(Product).all()
+        return self.session.query(Product).all()
