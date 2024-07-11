@@ -38,14 +38,12 @@ app = FastAPI(
 app.include_router(product_router)
 app.include_router(auth_router)
 
-
 @app.exception_handler(Exception)
 async def general_exception_handler(request, exc: Exception):
     return JSONResponse(
         status_code=500,
         content={"message": "Um erro inesperado correu no servidor"}
     )
-
 
 @app.exception_handler(HTTPException)
 async def general_exception_handler(request, exc: HTTPException):
@@ -54,11 +52,9 @@ async def general_exception_handler(request, exc: HTTPException):
         content={"message": exc.detail}
     )
 
-
 @app.get('/', tags=['Redirect'], include_in_schema=False)
 async def redirect_to_docs():
     return RedirectResponse(url='/docs')
-
 
 @app.get('/docs', tags=['Redirect'], include_in_schema=False)
 async def get_openapi():
@@ -66,7 +62,6 @@ async def get_openapi():
         openapi_url="/openapi.json",
         title="OpenApi UI"
     )
-
 
 if __name__ == '__main__':
     import uvicorn
