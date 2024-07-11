@@ -13,8 +13,7 @@ class Settings(BaseSettings):
     LOG_FILE_NAME: str
 
     TOKEN_EXPIRE_SECONDS: int
-    TOKEN_SECRET_KEY: int
-
+    TOKEN_SECRET_KEY: str
     DATABASE_URL: str
 
 settings = Settings()
