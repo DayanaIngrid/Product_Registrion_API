@@ -9,7 +9,7 @@ from src.repository.product_repository import ProductRepository
 
 product_router = APIRouter(prefix='/products', tags=['Products'], dependencies=[Depends(get_authenticated_product)])
 
-@product_router.post('/', status_code=201, description='cria um novo produto', response_model=ProductDTO)
+@product_router.post('/', status_code=201, description='cria um novo produto', response_model=ProductCreateDTO)
 async def create(request: ProductCreateDTO, product_service: ProductService = Depends(get_product_service)):
     return product_service.create(request)
 
