@@ -14,7 +14,7 @@ class Product(Base):
     estoque = Column(Integer)
 
     def __repr__(self):
-        return f'<product(id={self.id}, nome={self.nome}, descricao={self.descricao}, preco={self.preco}, estoque={self.estoque})>'
+        return f'<Product(id={self.id}, nome={self.nome}, descricao={self.descricao}, preco={self.preco}, estoque={self.estoque})>'
 
 
 init_db()
