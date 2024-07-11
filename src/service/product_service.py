@@ -16,12 +16,13 @@ class ProductService:
         logging.info('Criando um novo produto.')
         product = Product(**product_data.model_dump())
         try:
-            created = self.product_repository.save(product)
+            created = self.product_repository.create(product)
             return TypeAdapter(ProductDTO).validate_python(created)
         except IntegrityError as e:
             logging.error(f'Erro ao criar o produto: {product_data.model_dump()}')
             raise HTTPException(status_code=409, detail=f'Produto já existe na base: {e.args[0]}')
-
+    
+    
     def read(self, product_id: int) -> ProductDTO:
         logging.info('Buscando um produto.')
         return TypeAdapter(ProductDTO).validate_python(self._read(product_id))
@@ -44,7 +45,7 @@ class ProductService:
         product_data = product_data.model_dump(exclude_unset=True)
         for key, value in product_data.items():
             setattr(product, key, value)
-        updated_product = self.product_repository.save(product)
+        updated_product = self.product_repository.create(product)
         logging.info(f'Produto {product_id} atualizado: {updated_product}')
         return TypeAdapter(ProductDTO).validate_python(updated_product)
 
