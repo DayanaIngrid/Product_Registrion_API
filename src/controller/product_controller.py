@@ -13,7 +13,7 @@ def get_product_repo(session: Session = Depends(get_db)):
     return ProductRepository(session=session)
 
 
-@product_router.post('/', status_code=201, description='Cria um novo produto', response_model=ProductDTO)
+@product_router.post('/', status_code=201, description='Cria um novo produto', response_model=ProductCreateDTO)
 async def create(
         request: ProductCreateDTO,
         product_repo: ProductRepository = Depends(get_product_repo),

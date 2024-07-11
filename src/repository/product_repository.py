@@ -5,38 +5,21 @@ from datetime import datetime
 
 class ProductRepository:
 
-    def __init__(self, session: Session):
-        self.session = session
+    def __init__(self, db: Session):
+        self.db = db
 
-    def create(self, name: str, description: str, price: float, created_at: datetime):
-        product = Product(name=name, description=description, price=price, created_at=created_at)
-        self.session.add(product)
-        self.session.commit()
-        self.session.refresh(product)
+    def save(self, product: Product ):
+        self.db.add(product)
+        self.db.commit()
+        self.db.refresh(product)
         return product
 
+    def delete(self, product: Product):
+        self.db.delete(product)
+        self.db.commit()
+    
     def read(self, product_id: int):
-        return self.session.query(Product).filter(Product.id == product_id).first()
-
-    def update(self, product_id: int, name: str = None, description: str = None, price: float = None):
-        product = self.session.query(Product).filter(Product.id == product_id).first()
-        if product:
-            if name is not None:
-                product.name = name
-            if description is not None:
-                product.description = description
-            if price is not None:
-                product.price = price
-            self.session.commit()
-            self.session.refresh(product)
-        return product
-
-    def delete(self, product_id: int):
-        product = self.session.query(Product).filter(Product.id == product_id).first()
-        if product:
-            self.session.delete(product)
-            self.session.commit()
-        return product
+        return self.db.query(Product).filter(Product.id == product_id).first()
 
     def find_all(self):
-        return self.session.query(Product).all()
+        return self.db.query(Product).all()
